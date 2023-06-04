@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import { ListItem } from '@rneui/themed';
-import { DISHES } from '../shared/dishes';
+import { DISHES } from '../shared/dishesh';
 
 
 class Menu extends Component {

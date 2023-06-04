@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
 import { View, Platform } from 'react-native';
-import Menu from './MenuComponent.js';
+import Menu from './MenuComponent';
 import Home from './HomeComponent';
-import { DISHES } from '../shared/dishesh.js';
-import Dishdetail from './DishDetailComponent.js';
-import { createStackNavigator, createDrawerNavigator } from '@react-navigation/native';
+import { DISHES } from '../shared/dishesh';
+import Dishdetail from './DishDetailComponent';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 import Constants from 'expo-constants';
-import { Icon } from 'react-native-elements';
 
 const HomeNavigator = createStackNavigator({
     Home: { screen: Home }

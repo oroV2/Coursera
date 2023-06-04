@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Card } from '@rneui/themed';
-import { DISHES } from '../shared/dishes';
+import { DISHES } from '../shared/dishesh';
 
 function RenderDish(props) {
 
