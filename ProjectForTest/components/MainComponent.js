@@ -13,6 +13,7 @@ import { Icon } from '@rneui/themed';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 import Reservation from '../components/ReservationComponent';
+import Favorites from './FavoriteComponent';
 
 const mapStateToProps = state => {
     return {
@@ -102,6 +103,22 @@ const MainNavigator = createDrawerNavigator({
                 />
             ),
         }
+    },
+    Favorites:
+    {
+        screen: FavoritesNavigator,
+        navigationOptions: {
+            title: 'My Favorites',
+            drawerLabel: 'My Favorites',
+            drawerIcon: ({ tintColor, focused }) => (
+                <Icon
+                    name='heart'
+                    type='font-awesome'
+                    size={24}
+                    iconStyle={{ color: tintColor }}
+                />
+            ),
+        }
     }
 
 }, {
@@ -172,6 +189,23 @@ const AboutNavigator = createStackNavigator({
 
 const ReservationNavigator = createStackNavigator({
     Reservation: { screen: Reservation }
+}, {
+    navigationOptions: ({ navigation }) => ({
+        headerStyle: {
+            backgroundColor: "#512DA8"
+        },
+        headerTitleStyle: {
+            color: "#fff"
+        },
+        headerTintColor: "#fff",
+        headerLeft: <Icon name="menu" size={24}
+            iconStyle={{ color: 'white' }}
+            onPress={() => navigation.navigate('DrawerToggle')} />
+    })
+})
+
+const FavoritesNavigator = createStackNavigator({
+    Favorites: { screen: Favorites }
 }, {
     navigationOptions: ({ navigation }) => ({
         headerStyle: {
