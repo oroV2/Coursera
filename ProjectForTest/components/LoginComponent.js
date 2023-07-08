@@ -132,12 +132,24 @@ class RegisterTab extends Component {
         }
     }
 
+    static navigationOptions = {
+        title: 'Register',
+        tabBarIcon: ({ tintColor }) => (
+            <Icon
+                name='user-plus'
+                type='font-awesome'
+                size={24}
+                iconStyle={{ color: tintColor }}
+            />
+        )
+    }
+
     getImageFromCamera = async () => {
         const cameraPermission = await Permissions.askAsync(Permissions.CAMERA);
         const cameraRollPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
         if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
-            let capturedImage = await ImagePicker.launchCameraAsync({
+            const capturedImage = await ImagePicker.launchCameraAsync({
                 allowsEditing: true,
                 aspect: [4, 3],
             });
@@ -147,6 +159,17 @@ class RegisterTab extends Component {
             }
         }
 
+    }
+
+    getImageFromGallery = async () => {
+        const selectImage = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        })
+        if (!selectImage.cancelled) {
+            console.log(selectImage)
+            this.processImage(selectImage.uri)
+        }
     }
 
     processImage = async (imageUri) => {
@@ -162,23 +185,15 @@ class RegisterTab extends Component {
 
     }
 
-    static navigationOptions = {
-        title: 'Register',
-        tabBarIcon: ({ tintColor, focused }) => (
-            <Icon
-                name='user-plus'
-                type='font-awesome'
-                size={24}
-                iconStyle={{ color: tintColor }}
-            />
-        )
-    };
-
     handleRegister() {
         console.log(JSON.stringify(this.state));
         if (this.state.remember)
             SecureStore.setItemAsync('userinfo', JSON.stringify({ username: this.state.username, password: this.state.password }))
                 .catch((error) => console.log('Could not save user info', error));
+        else
+            SecureStore.deleteItemAsync('userinfo')
+                .catch(error => console.log("Couldn't delete user info due to error: ", error))
+
     }
 
     render() {
@@ -194,6 +209,10 @@ class RegisterTab extends Component {
                         <Button
                             title="Camera"
                             onPress={this.getImageFromCamera}
+                        />
+                        <Button
+                            title='Gallery'
+                            onPress={this.getImageFromGallery}
                         />
                     </View>
                     <Input
@@ -299,4 +318,15 @@ const Login = createBottomTabNavigator({
     }
 });
 
-export default Login;
+
+export default Login = createBottomTabNavigator({
+    Login: LoginTab,
+    Register: RegisterTab
+}, {
+    tabBarOptions: {
+        activeBackgroundColor: "#9575CD",
+        inactiveBackgroundColor: "#D1C4E9",
+        activeTintColor: "white",
+        inactiveTintColor: 'gray'
+    }
+})
